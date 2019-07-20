@@ -1,6 +1,7 @@
 import sys
 import json
 import datetime
+import random
 from functools import reduce
 
 def format_filename():
@@ -35,23 +36,100 @@ def multiplication(numbers):
 
 def subtract(num):
     return int(num) - int(num)
+
 def subtraction(numbers):
     sub = map(subtract, numbers)
     return sub
 
 def ramdon_number(numbers):
-    pass
+    index = random.randint(0,(len(numbers)-1))
+    print("Picking a random number from the list of your numbers. And the chosen one is: {}".format(numbers[index]))
+
+def merge_sort(numbers):
+    if len(numbers) > 1:
+        middle = len(numbers) // 2  # divide array length in half and use the "//" operator to *floor* the result
+
+        left_numbers = numbers[:middle]  # fill in left array
+        right_numbers = numbers[middle:]  # fill in right array
+
+        merge_sort(left_numbers)  # Sorting the first half
+        merge_sort(right_numbers)  # Sorting the second half
+
+        left_index = 0
+        right_index = 0
+        current_index = 0
+
+        # compare each index of the subnumberss adding the lowest value to the current_index
+        while left_index < len(left_numbers) and right_index < len(right_numbers):
+            if left_numbers[left_index] < right_numbers[right_index]:
+                numbers[current_index] = left_numbers[left_index]
+                left_index += 1
+            else:
+                numbers[current_index] = right_numbers[right_index]
+                right_index += 1
+            current_index += 1
+
+        # copy remaining elements of left_numbers[] if any
+        while left_index < len(left_numbers):
+            numbers[current_index] = left_numbers[left_index]
+            left_index += 1
+            current_index += 1
+
+        # copy remaining elements of right_numbers[] if any
+        while right_index < len(right_numbers):
+            numbers[current_index] = right_numbers[right_index]
+            right_index += 1
+            current_index += 1
+
+def merge_sort_reversed(numbers):
+    if len(numbers) > 1:
+        middle = len(numbers) // 2  # divide array length in half and use the "//" operator to *floor* the result
+
+        left_numbers = numbers[:middle]  # fill in left array
+        right_numbers = numbers[middle:]  # fill in right array
+
+        merge_sort(left_numbers)  # Sorting the first half
+        merge_sort(right_numbers)  # Sorting the second half
+
+        left_index = 0
+        right_index = 0
+        current_index = 0
+
+        # compare each index of the subnumberss adding the lowest value to the current_index
+        while left_index < len(left_numbers) and right_index < len(right_numbers):
+            if left_numbers[left_index] < right_numbers[right_index]:
+                numbers[current_index] = left_numbers[left_index]
+                left_index += 1
+            else:
+                numbers[current_index] = right_numbers[right_index]
+                right_index += 1
+            current_index += 1
+
+        # copy remaining elements of left_numbers[] if any
+        while left_index < len(left_numbers):
+            numbers[current_index] = left_numbers[left_index]
+            left_index += 1
+            current_index += 1
+
+        # copy remaining elements of right_numbers[] if any
+        while right_index < len(right_numbers):
+            numbers[current_index] = right_numbers[right_index]
+            right_index += 1
+            current_index += 1
+
 def sorted_low_to_high(numbers):
-    pass
+    merge_sort(numbers)
+    print(numbers)
+
 def sorted_reverse(numbers):
-    pass
+    print(sorted(numbers,reverse=True))
 
 def menu(numbers):
     numbers_selected = "The numbers you've selected are: {}".format(numbers)
     options = """
     
     1 - Multiply, show result and write to JSON file
-    2 - Subtract, show result and write to JSON file
+    2 - Subtract
     3 - Show random number
     4 - Show sorted list (from lower to highest)
     5 - Show reverse sorted list (from highest to lower)\n"""
@@ -61,15 +139,14 @@ def menu(numbers):
         if chosen =='1': 
             multiplication(numbers)
         elif chosen == '2': 
-            for s in map(lambda x: int(x)-int(x), numbers):
-                print(s, end=",")
+            map(lambda x: print(x), numbers)
             print("\n")
         elif chosen == '3':
-            pass
+            ramdon_number(numbers)
         elif chosen == '4': 
-            print("Show")
+            sorted_low_to_high(numbers)
         elif chosen == '5': 
-            print ("Show")
+            sorted_reverse(numbers)
         else: 
             print("Unknown Option Selected!")
 
