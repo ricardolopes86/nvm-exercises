@@ -1,2 +1,5 @@
 ---
-# handlers file for mysql-replicas
+- name: restartMySQL
+  service:
+    name: mysql
+    state: restarted

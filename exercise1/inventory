@@ -1,4 +1,0 @@
-[master]
-3.8.235.0 ansible_connection=ssh ansible_user=ubuntu
-[replica]
-3.8.85.80 ansible_connection=ssh ansible_user=ubuntu

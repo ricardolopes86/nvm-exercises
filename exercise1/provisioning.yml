@@ -14,4 +14,4 @@
   become: yes
   gather_facts: yes
   roles:
-    - mysql-replica
+    - mysql-replicas

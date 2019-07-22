@@ -35,25 +35,25 @@
   notify:
     - restartMySQL
 
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
+
 - name: 7.Copy /home/ubuntu/permissions.sql
-  copy: 
-    content: "CHANGE MASTER TO MASTER_HOST='{{ master_private_ip }}',MASTER_USER='{{ replica_user }}',MASTER_PASSWORD='{{ replica_password }}',MASTER_LOG_FILE='mysql-bin.000001',MASTER_LOG_POS=107;"
+  template:
+    src: sqlStatement.sql.j2
     dest: /home/ubuntu/permissions.sql
+    owner: ubuntu
+  tags:
+    - replicapermissions
 
 - name: 8.Copy dump file to Replica
   copy: 
     dest: /home/ubuntu/importScript.sql
     src: files/importScript.sql
+    owner: ubuntu
 
 - name: 9.Import DB from Master
-  mysql_db:
-    name: {{ database_name }}
-    state: import
-    target: /home/ubuntu/importScript.sql
+  shell: "mysql {{ database_name }} < /home/ubuntu/importScript.sql"
 
-- name: 10.Aplly permissions changes to Replica
-  shell: mysql {{ database_name }} < /home/ubuntu/permissions.sql
-
-- name: 11.Start Replica
-  mysql_replication:
-    mode: startslave
+- name: 10.Aplly permissions changes to Replica and Start Slave
+  shell: "mysql {{ database_name }} < /home/ubuntu/permissions.sql"

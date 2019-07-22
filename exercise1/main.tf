@@ -70,7 +70,7 @@ resource "aws_instance" "master-db" {
   vpc_security_group_ids = ["${aws_security_group.default_sg.id}"]
   subnet_id = "${aws_subnet.default_subnet.id}"
   provisioner "local-exec" {
-    command = "echo [master] > inventory && echo ${aws_instance.master-db.public_ip} ansible_connection=ssh ansible_user=ubuntu >> inventory"
+    command = "echo [master] >> inventory && echo ${aws_instance.master-db.public_ip} ansible_connection=ssh ansible_user=ubuntu private_ip=${self.private_ip} >> inventory"
   }
   provisioner "remote-exec" {
     inline = [
@@ -97,7 +97,7 @@ resource "aws_instance" "replica-db" {
   subnet_id = "${aws_subnet.default_subnet.id}"
 
   provisioner "local-exec" {
-    command = "echo [replica] >> inventory && echo ${aws_instance.replica-db.public_ip} ansible_connection=ssh ansible_user=ubuntu >> inventory"
+    command = "echo [replicas] >> inventory && echo ${aws_instance.replica-db.public_ip} ansible_connection=ssh ansible_user=ubuntu private_ip=${self.private_ip} >> inventory"
   }
   provisioner "remote-exec" {
     inline = [

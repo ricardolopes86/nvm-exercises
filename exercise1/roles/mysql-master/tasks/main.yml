@@ -2,7 +2,7 @@
 - name: 1. Get private IP from Master
   shell: "hostname -I"
   register: master_private_ip
-  
+
 - name: 2.Configure Master repplication
   lineinfile:
     path: /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -29,14 +29,24 @@
   notify:
     - restartMySQL
 
-- name: 6.Dump to a file
+- name: 6.Copy SQL script to create users table
+  copy:
+    src: files/createTable.sql
+    dest: /home/ubuntu/createTable.sql
+    owner: ubuntu
+
+- name: 7.Run script against database
+  shell: mysql {{ database_name }} < /home/ubuntu/createTable.sql
+
+- name: 8.Dump to a file
   mysql_db:
     state: dump
     name: all
     target: /home/ubuntu/importScript.sql
 
-- name: 7.Copy dump file to Replica
-  copy: 
-    remote_src: yes
+- name: 9.Copy dump file from master
+  fetch: 
+    flat: yes
     src: /home/ubuntu/importScript.sql
-    dest: files/importScript.sql
+    dest: ./roles/mysql-replicas/files/importScript.sql
+  tags: copyDump

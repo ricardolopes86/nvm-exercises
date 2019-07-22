@@ -11,7 +11,16 @@
   tags:
     - installpkgs
 
-- name: Copy the root credentials as .my.cnf file
+- name: Copy the root credentials as .my.cnf file for ubuntu user
+  template:
+    src: root.cnf.j2 
+    dest: /home/ubuntu/.my.cnf 
+    mode: 0600
+    owner: ubuntu
+  tags:
+    - copycredentials
+  
+- name: Copy the root credentials as .my.cnf file for root user
   template:
     src: root.cnf.j2 
     dest: ~/.my.cnf 
@@ -39,7 +48,6 @@
     - localhost
     - 127.0.0.1
     - ::1
-    - "{{ ansible_hostname }}"
     - "{{ master_private_ip.stdout_lines[0] }}"
   tags:
     - updaterootpasswd
@@ -48,6 +56,15 @@
   become: yes
   lineinfile:
     path: /root/.my.cnf
+    regexp: '^password='
+    line: password="{{ mysql_root_pass }}"
+  tags:
+    - setnewrootpasswd
+
+- name: Set root password on .my.cnf
+  become: yes
+  lineinfile:
+    path: /home/ubuntu/.my.cnf
     regexp: '^password='
     line: password="{{ mysql_root_pass }}"
   tags:
@@ -64,7 +81,6 @@
      - localhost
      - 127.0.0.1
      - ::1
-     - "{{ ansible_hostname }}"
      - "{{ master_private_ip.stdout_lines[0] }}"
   tags:
     - removeanonymous
@@ -88,9 +104,18 @@
   tags:
     - removetestdb
 
+- name: Generate SQL script which will grant access as replica
+  template:
+    src: grantPrivileges.sql.j2
+    dest: /home/ubuntu/grantPrivileges.sql
+    mode: 0777
+    owner: ubuntu
+
+- name: Run script to grant privileges to {{ replica_user }}
+  shell: "mysql {{ database_name }} < /home/ubuntu/grantPrivileges.sql"
+
 - name: Create replication user
   mysql_user:
-    database: "{{ database_name }}"
     name: "{{ replica_user }}"
     password: "{{ replica_password }}"
     state: present
