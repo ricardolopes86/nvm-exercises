@@ -18,7 +18,7 @@
   lineinfile:
     path: /etc/mysql/mysql.conf.d/mysqld.cnf
     regexp: '^#binlog_do_db'
-    line: "binlog_do_db=nvmDB"
+    line: "binlog_do_db={{ database_name }}"
 
 - name: 5.Configure Master repplication
   lineinfile:

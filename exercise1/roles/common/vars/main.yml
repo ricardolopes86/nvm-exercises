@@ -1,2 +1,3 @@
 ---
 mysql_root_pass: "{{ lookup('file', 'files/root.txt')}}"
+database_name: "nvmDB"

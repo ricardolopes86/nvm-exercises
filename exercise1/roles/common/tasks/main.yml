@@ -66,7 +66,7 @@
 - name: Create DB in MySQL
   mysql_db:
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    name: nvmDB
+    name: "{{ database_name }}"
     state: present
   notify:
     - restartMySQL
