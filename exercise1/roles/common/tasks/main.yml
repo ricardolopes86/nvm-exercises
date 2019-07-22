@@ -81,3 +81,10 @@
     - restartMySQL
   tags:
     - removetestdb
+
+- name: Create replication user
+  mysql_user:
+    database: "{{ database_name }}"
+    name: "{{ replica_user }}"
+    password: "{{ replica_password }}"
+    state: present

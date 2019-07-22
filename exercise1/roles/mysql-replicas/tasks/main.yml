@@ -35,13 +35,18 @@
   notify:
     - restartMySQL
 
-- name: 7.Import DB from Master
+- name: 7.Copy /home/ubuntu/permissions.sql
+  copy: 
+    content: "CHANGE MASTER TO MASTER_HOST='{{ master_private_ip }}',MASTER_USER='{{ replica_user }}',MASTER_PASSWORD='{{ replica_password }}',MASTER_LOG_FILE='mysql-bin.000001',MASTER_LOG_POS=107;"
+    dest: /home/ubuntu/permissions.sql
+
+- name: 8.Import DB from Master
   mysql_db:
     import: /home/ubuntu/importScript.sql
 
-- name: 8.Aplly permissions changes to Replica
+- name: 9.Aplly permissions changes to Replica
   shell: mysql {{ database_name }} < /home/ubuntu/permissions.sql
 
-- name: 9.Start Replica
+- name: 10.Start Replica
   mysql_replication:
     mode: stopslave

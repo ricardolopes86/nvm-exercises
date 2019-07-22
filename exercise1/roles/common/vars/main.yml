@@ -1,3 +1,5 @@
 ---
 mysql_root_pass: "{{ lookup('file', 'files/root.txt')}}"
+replica_user: "replica_user" 
+replica_password: "{{ lookup('file', 'files/replica.txt')}}"
 database_name: "nvmDB"
