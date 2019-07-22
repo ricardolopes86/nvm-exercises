@@ -1,0 +1,29 @@
+---
+- name: 1. Get private IP from Master
+  shell: "hostname -I"
+  register: master_private_ip
+- name: 2.Configure Master repplication
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address'
+    line: "bind-address={{ master_private_ip.stdout_lines[0] }}"
+
+- name: 3.Configure Master repplication
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^#log_bin'
+    line: "log_bin = /var/log/mysql/mysql-bin.log"
+
+- name: 4.Configure Master repplication
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^#binlog_do_db'
+    line: "binlog_do_db=nvmDB"
+
+- name: 5.Configure Master repplication
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^#server-id'
+    line: "server-id=1"
+  notify:
+    - restartMySQL

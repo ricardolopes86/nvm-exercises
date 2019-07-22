@@ -1,0 +1,83 @@
+---
+- name: Deploy MySQL and dependencies
+  apt: 
+    name: ['mysql-server', 'mysql-client', 'libmysqlclient-dev']
+    state: present 
+    update_cache: yes
+  tags:
+    - installpkgs
+
+- name: Copy the root credentials as .my.cnf file
+  template:
+    src: root.cnf.j2 
+    dest: ~/.my.cnf 
+    mode: 0600
+  tags:
+    - copycredentials
+
+- name: Install Python pip to fulfill dependencies
+  pip:
+    name: PyMySQL
+  tags:
+    - pipinstall
+
+- name: Update root password for MySQL
+  become: yes
+  mysql_user:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    login_user: root
+    login_password: "{{ mysql_root_pass }}"
+    name: root
+    host: "{{ item }}"
+    password: "{{ mysql_root_pass }}"
+    state: present
+  with_items:
+    - localhost
+    - 127.0.0.1
+    - ::1
+    - "{{ ansible_hostname }}"
+  tags:
+    - updaterootpasswd
+    
+- name: Set root password on .my.cnf
+  become: yes
+  lineinfile:
+    path: /root/.my.cnf
+    regexp: '^password='
+    line: password="{{ mysql_root_pass }}"
+  tags:
+    - setnewrootpasswd
+
+
+- name: Ensure Anonymous user(s) are not in the database
+  become: yes
+  mysql_user:
+    name: ''
+    host: "{{ item }} "
+    state: absent
+  with_items:
+     - localhost
+     - 127.0.0.1
+     - ::1
+     - "{{ ansible_hostname }}"
+  tags:
+    - removeanonymous
+
+- name: Create DB in MySQL
+  mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: nvmDB
+    state: present
+  notify:
+    - restartMySQL
+  tags:
+    - createdb
+
+- name: Remove the test database
+  mysql_db:
+    name: test
+    state: absent
+  notify:
+    - restartMySQL
+  tags:
+    - removetestdb

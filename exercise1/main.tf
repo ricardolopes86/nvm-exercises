@@ -49,19 +49,60 @@ resource "aws_security_group" "default_sg" {
   }
 }
 
+resource "aws_key_pair" "ssh_key" {
+  key_name = "${var.key_name}"
+  public_key = "${file(var.public_key_path)}"
+}
+
+
 resource "aws_instance" "master-db" {
-  ami = "${var.aws_instance_ami.default}"
+
+  connection {
+    # The default username for our AMI
+    user = "ubuntu"
+    host = "${self.public_ip}"
+  }
+
+  ami = "${var.aws_instance_ami}"
   instance_type = "t2.medium"
 
+  key_name = "${aws_key_pair.ssh_key.id}"
   vpc_security_group_ids = ["${aws_security_group.default_sg.id}"]
   subnet_id = "${aws_subnet.default_subnet.id}"
+  provisioner "local-exec" {
+    command = "echo [master] > inventory && echo ${aws_instance.master-db.public_ip} ansible_connection=ssh ansible_user=ubuntu >> inventory"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get -y update",
+      "sudo apt-get install python-pip -y"
+    ]
+  }
 
 }
 
 resource "aws_instance" "replica-db" {
-  ami = "${var.aws_instance_ami.default}"
+
+  connection {
+    # The default username for our AMI
+    user = "ubuntu"
+    host = "${self.public_ip}"
+  }
+
+  ami = "${var.aws_instance_ami}"
   instance_type = "t2.medium"
 
+  key_name = "${aws_key_pair.ssh_key.id}"
   vpc_security_group_ids = ["${aws_security_group.default_sg.id}"]
   subnet_id = "${aws_subnet.default_subnet.id}"
+
+  provisioner "local-exec" {
+    command = "echo [replica] >> inventory && echo ${aws_instance.replica-db.public_ip} ansible_connection=ssh ansible_user=ubuntu >> inventory"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get -y update",
+      "sudo apt-get install python-pip -y"
+    ]
+  }
 }

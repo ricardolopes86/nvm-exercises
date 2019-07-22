@@ -7,3 +7,19 @@ variable "aws_instance_ami" {
   description = "The default AMI used to deploy our instances."
   default = "ami-0cbe2951c7cd54704"
 }
+
+variable "public_key_path" {
+  description = "Path to the Publick SSH Key"
+  default = "~/.ssh/id_rsa.pub"
+}
+
+variable "root_password_file" {
+  description = "Path to file containing the root password for MySQL"
+  default = "root.txt"
+}
+
+
+variable "key_name" {
+  description = "Name of AWS key pair"
+  default = "aws_ssh_key"
+}
