@@ -2,6 +2,7 @@
 - name: 1. Get private IP from Master
   shell: "hostname -I"
   register: master_private_ip
+  
 - name: 2.Configure Master repplication
   lineinfile:
     path: /etc/mysql/mysql.conf.d/mysqld.cnf

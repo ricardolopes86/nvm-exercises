@@ -1,4 +1,8 @@
 ---
+- name: 1. Get private IP from Master
+  shell: "hostname -I"
+  register: master_private_ip
+
 - name: Deploy MySQL and dependencies
   apt: 
     name: ['mysql-server', 'mysql-client', 'libmysqlclient-dev']
@@ -36,6 +40,7 @@
     - 127.0.0.1
     - ::1
     - "{{ ansible_hostname }}"
+    - "{{ master_private_ip.stdout_lines[0] }}"
   tags:
     - updaterootpasswd
     
@@ -60,6 +65,7 @@
      - 127.0.0.1
      - ::1
      - "{{ ansible_hostname }}"
+     - "{{ master_private_ip.stdout_lines[0] }}"
   tags:
     - removeanonymous
 
