@@ -72,7 +72,7 @@
 - name: Create DB in MySQL
   mysql_db:
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    name: nvmDB
+    name: "{{ database_name }}"
     state: present
   notify:
     - restartMySQL
@@ -87,3 +87,10 @@
     - restartMySQL
   tags:
     - removetestdb
+
+- name: Create replication user
+  mysql_user:
+    database: "{{ database_name }}"
+    name: "{{ replica_user }}"
+    password: "{{ replica_password }}"
+    state: present

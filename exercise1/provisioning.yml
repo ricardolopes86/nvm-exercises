@@ -9,3 +9,9 @@
   gather_facts: yes
   roles:
     - mysql-master
+
+- hosts: replicas
+  become: yes
+  gather_facts: yes
+  roles:
+    - mysql-replica
