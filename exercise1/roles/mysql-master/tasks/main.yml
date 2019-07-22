@@ -27,3 +27,15 @@
     line: "server-id=1"
   notify:
     - restartMySQL
+
+- name: 6.Dump to a file
+  mysql_db:
+    state: dump
+    name: all
+    target: /home/ubuntu/importScript.sql
+
+- name: 7.Copy dump file to Replica
+  copy: 
+    remote_src: yes
+    src: /home/ubuntu/importScript.sql
+    dest: files/importScript.sql
