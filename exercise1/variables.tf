@@ -13,12 +13,6 @@ variable "public_key_path" {
   default = "~/.ssh/id_rsa.pub"
 }
 
-variable "root_password_file" {
-  description = "Path to file containing the root password for MySQL"
-  default = "root.txt"
-}
-
-
 variable "key_name" {
   description = "Name of AWS key pair"
   default = "aws_ssh_key"
