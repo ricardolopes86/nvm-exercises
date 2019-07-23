@@ -33,3 +33,9 @@ where: `x`, `y`, `a`, `b`, `c` and `d` are user line arguments and `X` is the mu
 * Print sorted (lowest to highest) array/list of numbers.
 
 Keep in mind that the program must respond appropriately upon possible human-errors. Also, the above choice menu must run forever on a loop until the user kills the program through SIGINIT or CTRL+C.
+
+# How to Use
+
+## Pre-requisites
+
+## Step-by-step

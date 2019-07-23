@@ -31,6 +31,8 @@
 - name: Install Python pip to fulfill dependencies
   pip:
     name: "{{ item }}"
+    virtualenv: ~/nvm/venv
+    virtualenv_site_packages: yes
   with_items:
     - PyMySQL
     - mysqlclient
