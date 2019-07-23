@@ -1,0 +1,38 @@
+#!/usr/bin/python
+import mysql.connector
+import logging
+
+logname="/home/ubuntu/insert_log.log"
+
+logging.basicConfig(filename=logname,
+    filemode='a',
+    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+    datefmt='%H:%M:%S',
+    level=logging.DEBUG)
+
+
+try:
+    logging.info("Running Insert Script")
+    mydb = mysql.connector.connect(host="localhost",
+                user="{{ app_user }}", passwd="{{ app_user_password }}", database="{{ database_name }}")
+    logging.info("Getting cursor")
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO users (phone, name, address) VALUES (%s, %s, %s)"
+    filepath = 'user_data.csv'
+    with open(filepath) as fp:
+        for cnt, line in enumerate(fp):
+            newline = line.strip().split(',')
+            logging.info("Line {}: {}".format(cnt, newline))
+            mycursor.execute(sql, newline)
+    logging.info("Successfully inserted. Commting changes to DB")
+    mydb.commit()
+    print ("Record inserted successfully into users table")
+except Exception as error:
+    logging.error("Failed inserting record into users table: {}".format(error))
+    mydb.rollback()
+    print("Failed inserting record into users table {}".format(error))
+
+finally:
+    #closing database connection.
+    logging.info("Closing connection with DB")
+    mydb.close()

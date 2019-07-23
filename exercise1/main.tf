@@ -1,10 +1,17 @@
+terraform {
+  required_version = "> 0.11"
+}
+
 provider "aws" {
-    profile = "default"
-    region = "${var.aws_region}"
+  version = "~>2.0"
+  profile = "default"
+  region = "${var.aws_region}"
 }
 
 resource "aws_vpc" "default_vpc" {
   cidr_block = "10.0.1.0/24"
+  enable_dns_hostnames = true
+  enable_dns_support = true
 }
 
 resource "aws_internet_gateway" "default" {
@@ -30,15 +37,9 @@ resource "aws_security_group" "default_sg" {
   vpc_id = "${aws_vpc.default_vpc.id}"
 
   ingress {
-      from_port = 22
-      to_port = 22
-      protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-      from_port = 3306
-      to_port = 3306
-      protocol = "tcp"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
       cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
@@ -74,7 +75,7 @@ resource "aws_instance" "master-db" {
   }
   provisioner "remote-exec" {
     inline = [
-      "sudo apt-get -y update",
+      "sudo apt-get update -y",
       "sudo apt-get install python-pip -y"
     ]
   }
@@ -101,7 +102,7 @@ resource "aws_instance" "replica-db" {
   }
   provisioner "remote-exec" {
     inline = [
-      "sudo apt-get -y update",
+      "sudo apt-get update -y",
       "sudo apt-get install python-pip -y"
     ]
   }

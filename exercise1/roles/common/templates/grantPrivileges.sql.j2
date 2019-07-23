@@ -1,4 +1,1 @@
 GRANT REPLICATION SLAVE ON *.* TO '{{ replica_user }}'@'%' IDENTIFIED BY '{{ replica_password }}';
-FLUSH PRIVILEGES;
-USE {{database_name}};
-FLUSH TABLES WITH READ LOCK;

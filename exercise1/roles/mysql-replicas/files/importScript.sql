@@ -120,7 +120,7 @@ CREATE TABLE `engine_cost` (
 
 LOCK TABLES `engine_cost` WRITE;
 /*!40000 ALTER TABLE `engine_cost` DISABLE KEYS */;
-INSERT INTO `engine_cost` VALUES ('default',0,'io_block_read_cost',NULL,'2019-07-22 22:41:42',NULL),('default',0,'memory_block_read_cost',NULL,'2019-07-22 22:41:42',NULL);
+INSERT INTO `engine_cost` VALUES ('default',0,'io_block_read_cost',NULL,'2019-07-23 15:29:31',NULL),('default',0,'memory_block_read_cost',NULL,'2019-07-23 15:29:31',NULL);
 /*!40000 ALTER TABLE `engine_cost` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -337,7 +337,7 @@ CREATE TABLE `innodb_index_stats` (
 
 LOCK TABLES `innodb_index_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_index_stats` DISABLE KEYS */;
-INSERT INTO `innodb_index_stats` VALUES ('mysql','gtid_executed','PRIMARY','2019-07-22 22:41:42','n_diff_pfx01',0,1,'source_uuid'),('mysql','gtid_executed','PRIMARY','2019-07-22 22:41:42','n_diff_pfx02',0,1,'source_uuid,interval_start'),('mysql','gtid_executed','PRIMARY','2019-07-22 22:41:42','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_executed','PRIMARY','2019-07-22 22:41:42','size',1,NULL,'Number of pages in the index'),('nvmDB','users','PRIMARY','2019-07-22 22:42:34','n_diff_pfx01',0,1,'user_id'),('nvmDB','users','PRIMARY','2019-07-22 22:42:34','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('nvmDB','users','PRIMARY','2019-07-22 22:42:34','size',1,NULL,'Number of pages in the index'),('sys','sys_config','PRIMARY','2019-07-22 22:41:43','n_diff_pfx01',6,1,'variable'),('sys','sys_config','PRIMARY','2019-07-22 22:41:43','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('sys','sys_config','PRIMARY','2019-07-22 22:41:43','size',1,NULL,'Number of pages in the index');
+INSERT INTO `innodb_index_stats` VALUES ('mysql','gtid_executed','PRIMARY','2019-07-23 15:29:31','n_diff_pfx01',0,1,'source_uuid'),('mysql','gtid_executed','PRIMARY','2019-07-23 15:29:31','n_diff_pfx02',0,1,'source_uuid,interval_start'),('mysql','gtid_executed','PRIMARY','2019-07-23 15:29:31','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_executed','PRIMARY','2019-07-23 15:29:31','size',1,NULL,'Number of pages in the index'),('nvmDB','users','PRIMARY','2019-07-23 15:30:36','n_diff_pfx01',0,1,'user_id'),('nvmDB','users','PRIMARY','2019-07-23 15:30:36','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('nvmDB','users','PRIMARY','2019-07-23 15:30:36','size',1,NULL,'Number of pages in the index'),('sys','sys_config','PRIMARY','2019-07-23 15:29:31','n_diff_pfx01',6,1,'variable'),('sys','sys_config','PRIMARY','2019-07-23 15:29:31','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('sys','sys_config','PRIMARY','2019-07-23 15:29:31','size',1,NULL,'Number of pages in the index');
 /*!40000 ALTER TABLE `innodb_index_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -365,7 +365,7 @@ CREATE TABLE `innodb_table_stats` (
 
 LOCK TABLES `innodb_table_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_table_stats` DISABLE KEYS */;
-INSERT INTO `innodb_table_stats` VALUES ('mysql','gtid_executed','2019-07-22 22:41:42',0,1,0),('nvmDB','users','2019-07-22 22:42:34',0,1,0),('sys','sys_config','2019-07-22 22:41:43',6,1,0);
+INSERT INTO `innodb_table_stats` VALUES ('mysql','gtid_executed','2019-07-23 15:29:31',0,1,0),('nvmDB','users','2019-07-23 15:30:36',0,1,0),('sys','sys_config','2019-07-23 15:29:31',6,1,0);
 /*!40000 ALTER TABLE `innodb_table_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -549,7 +549,7 @@ CREATE TABLE `server_cost` (
 
 LOCK TABLES `server_cost` WRITE;
 /*!40000 ALTER TABLE `server_cost` DISABLE KEYS */;
-INSERT INTO `server_cost` VALUES ('disk_temptable_create_cost',NULL,'2019-07-22 22:41:42',NULL),('disk_temptable_row_cost',NULL,'2019-07-22 22:41:42',NULL),('key_compare_cost',NULL,'2019-07-22 22:41:42',NULL),('memory_temptable_create_cost',NULL,'2019-07-22 22:41:42',NULL),('memory_temptable_row_cost',NULL,'2019-07-22 22:41:42',NULL),('row_evaluate_cost',NULL,'2019-07-22 22:41:42',NULL);
+INSERT INTO `server_cost` VALUES ('disk_temptable_create_cost',NULL,'2019-07-23 15:29:31',NULL),('disk_temptable_row_cost',NULL,'2019-07-23 15:29:31',NULL),('key_compare_cost',NULL,'2019-07-23 15:29:31',NULL),('memory_temptable_create_cost',NULL,'2019-07-23 15:29:31',NULL),('memory_temptable_row_cost',NULL,'2019-07-23 15:29:31',NULL),('row_evaluate_cost',NULL,'2019-07-23 15:29:31',NULL);
 /*!40000 ALTER TABLE `server_cost` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -700,7 +700,7 @@ CREATE TABLE `tables_priv` (
 
 LOCK TABLES `tables_priv` WRITE;
 /*!40000 ALTER TABLE `tables_priv` DISABLE KEYS */;
-INSERT INTO `tables_priv` VALUES ('localhost','mysql','mysql.session','user','boot@connecting host','0000-00-00 00:00:00','Select',''),('localhost','sys','mysql.sys','sys_config','root@localhost','2019-07-22 22:41:43','Select','');
+INSERT INTO `tables_priv` VALUES ('localhost','mysql','mysql.session','user','boot@connecting host','0000-00-00 00:00:00','Select',''),('localhost','sys','mysql.sys','sys_config','root@localhost','2019-07-23 15:29:31','Select','');
 /*!40000 ALTER TABLE `tables_priv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -886,7 +886,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('localhost','root','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-22 22:42:02',NULL,'N'),('localhost','mysql.session','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE','N','2019-07-22 22:41:43',NULL,'Y'),('localhost','mysql.sys','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE','N','2019-07-22 22:41:43',NULL,'Y'),('localhost','debian-sys-maint','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','','','','',0,0,0,0,'mysql_native_password','*57F43792AF4263F5ED86F82D6F1653FC4E3F8339','N','2019-07-22 22:41:43',NULL,'N'),('127.0.0.1','root','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-22 22:42:03',NULL,'N'),('::1','root','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-22 22:42:04',NULL,'N'),('10.0.1.9','root','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-22 22:42:05',NULL,'N'),('%','replica_user','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','Y','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*77384625DF0DB7C06BAC97CD42574994A8F2A96A','N','2019-07-22 22:42:18',NULL,'N'),('localhost','replica_user','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*77384625DF0DB7C06BAC97CD42574994A8F2A96A','N','2019-07-22 22:42:19',NULL,'N');
+INSERT INTO `user` VALUES ('localhost','root','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-23 15:30:01',NULL,'N'),('localhost','mysql.session','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE','N','2019-07-23 15:29:31',NULL,'Y'),('localhost','mysql.sys','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE','N','2019-07-23 15:29:31',NULL,'Y'),('localhost','debian-sys-maint','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','','','','',0,0,0,0,'mysql_native_password','*32123ADB52864CA07DD05D3CB5D27BF1F815A99C','N','2019-07-23 15:29:32',NULL,'N'),('localhost','replica_user','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*77384625DF0DB7C06BAC97CD42574994A8F2A96A','N','2019-07-23 15:29:56',NULL,'N'),('localhost','app_user','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-23 15:29:57',NULL,'N'),('127.0.0.1','app_user','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-23 15:29:58',NULL,'N'),('::1','app_user','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-23 15:29:59',NULL,'N'),('10.0.1.13','app_user','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-23 15:30:00',NULL,'N'),('127.0.0.1','root','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-23 15:30:02',NULL,'N'),('::1','root','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-23 15:30:03',NULL,'N'),('10.0.1.13','root','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*2938CF0ADBD4A6B0D4FD5991F6F775DEDA267C48','N','2019-07-23 15:30:04',NULL,'N'),('%','replica_user','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','Y','N','N','N','N','N','N','N','N','N','','','','',0,0,0,0,'mysql_native_password','*77384625DF0DB7C06BAC97CD42574994A8F2A96A','N','2019-07-23 15:30:19',NULL,'N');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -947,7 +947,7 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `address` varchar(100) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -970,4 +970,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-22 22:42:35
+-- Dump completed on 2019-07-23 15:30:37

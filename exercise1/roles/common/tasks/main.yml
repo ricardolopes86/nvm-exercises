@@ -30,9 +30,41 @@
 
 - name: Install Python pip to fulfill dependencies
   pip:
-    name: PyMySQL
+    name: "{{ item }}"
+  with_items:
+    - PyMySQL
+    - mysqlclient
+    - mysql-client
+    - mysql-connector-python-rf
   tags:
     - pipinstall
+
+- name: Create replication user
+  mysql_user:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    login_user: root
+    login_password: "{{ mysql_root_pass }}"
+    name: "{{ replica_user }}"
+    password: "{{ replica_password }}"
+    state: present
+
+- name: Create app user for MySQL
+  become: yes
+  mysql_user:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    login_user: root
+    login_password: "{{ mysql_root_pass }}"
+    name: "{{ app_user }}"
+    host: "{{ item }}"
+    password: "{{ mysql_root_pass }}"
+    state: present
+  with_items:
+    - localhost
+    - 127.0.0.1
+    - ::1
+    - "{{ master_private_ip.stdout_lines[0] }}"
+  tags:
+    - updaterootpasswd
 
 - name: Update root password for MySQL
   become: yes
@@ -111,11 +143,15 @@
     mode: 0777
     owner: ubuntu
 
+- name: Generate SQL script which will lock Master
+  template:
+    src: lockMaster.sql.j2
+    dest: /home/ubuntu/lockMaster.sql
+    mode: 0777
+    owner: ubuntu
+
 - name: Run script to grant privileges to {{ replica_user }}
   shell: "mysql {{ database_name }} < /home/ubuntu/grantPrivileges.sql"
 
-- name: Create replication user
-  mysql_user:
-    name: "{{ replica_user }}"
-    password: "{{ replica_password }}"
-    state: present
+- name: Run script to lock Master
+  shell: "mysql {{ database_name }} < /home/ubuntu/lockMaster.sql"

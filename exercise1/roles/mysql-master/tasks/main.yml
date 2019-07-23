@@ -29,6 +29,14 @@
   notify:
     - restartMySQL
 
+- name: Lock master
+  shell: "mysql -u root -e 'show master status'"
+  register: mysql_master_position
+
+- name: Print master position
+  debug: 
+    var: mysql_master_position
+
 - name: 6.Copy SQL script to create users table
   copy:
     src: files/createTable.sql
@@ -50,3 +58,40 @@
     src: /home/ubuntu/importScript.sql
     dest: ./roles/mysql-replicas/files/importScript.sql
   tags: copyDump
+
+- name: Copy privileges script for app_user
+  template:
+    src: grantPrivilegesUser.sql.j2
+    dest: /home/ubuntu/grantPrivilegesUser.sql
+    owner: ubuntu
+    mode: 0775
+
+- name: Copy unlock master script to Master
+  copy:
+    src: files/unlockMaster.sql
+    dest: /home/ubuntu/unlockMaster.sql
+    owner: ubuntu
+    mode: 0755
+    
+- name: Unlock Master
+  shell: "mysql {{ database_name }} < /home/ubuntu/unlockMaster.sql"
+
+- name: Run script to grant privileges to {{ app_user }}
+  shell: "mysql {{ database_name }} < /home/ubuntu/grantPrivilegesUser.sql"
+
+- name: Send sample user data to master
+  copy:
+    src: files/user_data.csv
+    dest: /home/ubuntu/user_data.csv
+    owner: ubuntu
+    mode: 0755
+
+- name: 10.Copy script to insert data into the users table
+  template:
+    src: insert.py.j2
+    dest: /home/ubuntu/insert.py
+    owner: ubuntu
+    mode: 0755
+
+- name: 11.Run insert script
+  shell: /home/ubuntu/insert.py
