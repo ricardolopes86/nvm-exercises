@@ -27,7 +27,7 @@ def write_to_json(data):
         json.dump(data, json_file)
     print("The content was saved to a file called: {}\n".format(file_name))
 
-@pytest.mark.parametrize("numbers_list",[(12,122,13,4,554,96)])
+@pytest.mark.parametrize("numbers_list", [(12, 122, 13, 4, 554, 96)])
 def test_multiplication(numbers_list):
     """
     Unit test to assert result of multiplication
@@ -60,7 +60,7 @@ def multiplication(numbers_list):
     print(json.dumps(multiplication_data, indent=4, sort_keys=True))
     write_to_json(multiplication_data)
 
-@pytest.mark.parametrize("numbers_list",[(12,122,13,4,554,96)])
+@pytest.mark.parametrize("numbers_list", [(12, 122, 13, 4, 554, 96)])
 def test_subtraction(numbers_list):
     """
     Unit test to assert result of subtracting all numbers in the list
@@ -120,12 +120,12 @@ def merge_sort(numbers_list):
             right_index += 1
             current_index += 1
 
-@pytest.mark.parametrize("numbers_list",[(12,122,13,4,554,96)])
+@pytest.mark.parametrize("numbers_list", [(12, 122, 13, 4, 554, 96)])
 def test_sorted_high_to_low(numbers_list):
     """
-    Unit test to assert sorting from lower to higher 
+    Unit test to assert sorting from lower to higher
     """
-    assert merge_sort(numbers_list) == [4,12,13,96,122,554]
+    assert merge_sort(numbers_list) == [4, 12, 13, 96, 122, 554]
 
 def sorted_low_to_high(numbers_list):
     """
@@ -134,12 +134,12 @@ def sorted_low_to_high(numbers_list):
     merge_sort(numbers_list)
     print(numbers_list)
 
-@pytest.mark.parametrize("numbers_list",[(12,122,13,4,554,96)])
+@pytest.mark.parametrize("numbers_list", [(12, 122, 13, 4, 554, 96)])
 def test_sorted_low_to_high(numbers_list):
     """
-    Unit test to assert sorting from higher to lower 
+    Unit test to assert sorting from higher to lower
     """
-    assert sorted(numbers_list, reverse=True) == [554,122,96,13,12,4]
+    assert sorted(numbers_list, reverse=True) == [554, 122, 96, 13, 12, 4]
 
 def sorted_reverse(numbers_list):
     """
