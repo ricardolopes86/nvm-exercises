@@ -10,4 +10,4 @@ WORKDIR /app
 
 COPY ./*.* /app/
 
-ENTRYPOINT [ "pylint", "/app/exercise2.py" ]
+ENTRYPOINT [ "pylint", "/app/exercise2.py" "--errors-only"]
