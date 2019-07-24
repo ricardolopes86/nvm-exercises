@@ -4,7 +4,6 @@ services:
   - docker
 
 before_install:
-  - cd /app
   - docker build -t nvm-test -f run-app.Dockerfile .
   - docker build -t nvm-lint -f lint.Dockerfile .
   - docker build -t nvm-test -f test.Dockerfile .
