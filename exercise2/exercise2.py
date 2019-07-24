@@ -1,21 +1,43 @@
+"""
+Playing with numbers.
+This awesome program will perform some operations to a list of numbers.
+You should input *exactly* 6 numbers right after the command.
+"""
 import sys
 import json
 import datetime
 import random
 from functools import reduce
 import operator
+import pytest
 
 def format_filename():
+    """
+    Just a simple method to format the filename for the JSON file that will be generated. It's based on the current date and time.
+    """
     current_time = datetime.datetime.now()
     return ""+str(current_time.year)+"-"+str(current_time.month)+"-"+str(current_time.day)+"_"+str(current_time.hour)+"-"+str(current_time.minute)+"-"+str(current_time.second)
 
-def write_to_JSON(data):
+def write_to_json(data):
+    """
+    The method to write the JSON generated in the multiplication method.
+    """
     file_name = "{}.json".format(format_filename())
     with open(file_name, "w") as json_file:
         json.dump(data, json_file)
     print("The content was saved to a file called: {}\n".format(file_name))
 
-def multiplication(numbers):
+@pytest.mark.parametrize("numbers_list",[(1,2,3,4,5,6)])
+def test_multiplication(numbers_list):
+    multi = 1
+    for number in numbers_list:
+        multi = int(number) * multi
+    assert multi == 720
+
+def multiplication(numbers_list):
+    """
+    Multiply the numbers in the array/list. Print them as JSON and write it to a file.
+    """
     multi = 1
     multiplication_data = {
         "InputNumber1": numbers[0],
@@ -27,28 +49,37 @@ def multiplication(numbers):
         "Multiplication": multi
     }
 
-    for number in numbers:
+    for number in numbers_list:
         multi = int(number) * multi
 
     multiplication_data["Multiplication"] = multi
     print("Printing your JSON below:")
     print(json.dumps(multiplication_data, indent=4, sort_keys=True))
-    write_to_JSON(multiplication_data)
+    write_to_json(multiplication_data)
 
 def subtract(num):
+    """
+    Will return the result of subtracting all the numbers in the array/list.
+    """
     numbers_diff = reduce(operator.sub, num)
     return numbers_diff
 
-def ramdon_number(numbers):
-    index = random.randint(0,(len(numbers)-1))
+def ramdon_number(numbers_list):
+    """
+    Pick a random number using the random module and the length of the array.
+    """
+    index = random.randint(0, (len(numbers_list)-1))
     print("Picking a random number from the list of your numbers. And the chosen one is: {}".format(numbers[index]))
 
-def merge_sort(numbers):
-    if len(numbers) > 1:
-        middle = len(numbers) // 2  # divide array length in half and use the "//" operator to *floor* the result
+def merge_sort(numbers_list):
+    """
+    Classic merge sort algorithm to sort and array/list.
+    """
+    if len(numbers_list) > 1:
+        middle = len(numbers_list) // 2  # divide array length in half and use the "//" operator to *floor* the result
 
-        left_numbers = numbers[:middle]  # fill in left array
-        right_numbers = numbers[middle:]  # fill in right array
+        left_numbers = numbers_list[:middle]  # fill in left array
+        right_numbers = numbers_list[middle:]  # fill in right array
 
         merge_sort(left_numbers)  # Sorting the first half
         merge_sort(right_numbers)  # Sorting the second half
@@ -79,15 +110,24 @@ def merge_sort(numbers):
             right_index += 1
             current_index += 1
 
-def sorted_low_to_high(numbers):
-    merge_sort(numbers)
-    print(numbers)
+def sorted_low_to_high(numbers_list):
+    """
+    Call a merge sort function to sort the list/array
+    """
+    merge_sort(numbers_list)
+    print(numbers_list)
 
-def sorted_reverse(numbers):
-    print(sorted(numbers,reverse=True))
+def sorted_reverse(numbers_list):
+    """
+    Using embedded sorted() function to reverse the array.
+    """
+    print(sorted(numbers_list, reverse=True))
 
-def menu(numbers):
-    numbers_selected = "The numbers you've selected are: {}".format(numbers)
+def menu(numbers_list):
+    """
+    Shows menu after successfully validate the inputs
+    """
+    numbers_selected = "The numbers you've selected are: {}".format(numbers_list)
     options = """
     
     1 - Multiply, show result and write to JSON file
@@ -98,31 +138,30 @@ def menu(numbers):
     while True:
         print(numbers_selected, options)
         chosen = input("Please, select one:")
-        if chosen =='1': 
-            multiplication(numbers)
-        elif chosen == '2': 
-            result = subtract(numbers)
+        if chosen == '1':
+            multiplication(numbers_list)
+        elif chosen == '2':
+            result = subtract(numbers_list)
             print("The subtraction value is: {}".format(result))
         elif chosen == '3':
-            ramdon_number(numbers)
-        elif chosen == '4': 
-            sorted_low_to_high(numbers)
-        elif chosen == '5': 
-            sorted_reverse(numbers)
-        else: 
+            ramdon_number(numbers_list)
+        elif chosen == '4':
+            sorted_low_to_high(numbers_list)
+        elif chosen == '5':
+            sorted_reverse(numbers_list)
+        else:
             print("Unknown Option Selected!")
 
 if __name__ == "__main__":
     try:
-        if (len(sys.argv) < 7):
+        if len(sys.argv) < 7:
             raise Exception("Arguments must have at least 6 numbers")
-        if (len(sys.argv) > 7):
+        if len(sys.argv) > 7:
             raise Exception("Arguments can't be longer than 6 numbers")
-    except Exception as e:
-        print(e)
+    except Exception as error:
+        print(error)
     else:
         numbers = []
         for x in range(len(sys.argv[1:7])):
             numbers.append(int(sys.argv[x+1]))
-        
         menu(numbers)
