@@ -17,3 +17,9 @@ jobs:
     - stage: test
       name: "Unit tests"
       script: docker container run nvm-test
+    - stage: package
+      name: "Packaging application"
+      script: ./package.sh
+    - stage: cleanup
+      name: "Cleaning up"
+      script: ./cleanup.sh
