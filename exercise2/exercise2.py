@@ -125,7 +125,7 @@ def test_sorted_high_to_low(numbers_list):
     """
     Unit test to assert sorting from lower to higher
     """
-    assert merge_sort(numbers_list) == [4, 12, 13, 96, 122, 554]
+    assert sorted(numbers_list) == [4, 12, 13, 96, 122, 554]
 
 def sorted_low_to_high(numbers_list):
     """
