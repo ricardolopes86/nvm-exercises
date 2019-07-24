@@ -8,5 +8,12 @@ before_install:
   - docker build -t nvm-run -f run-app.Dockerfile .
   - docker build -t nvm-lint -f lint.Dockerfile .
   - docker build -t nvm-test -f test.Dockerfile .
-  - docker container run nvm-lint
-  - docker container run nvm-test
+
+jobs:
+  include:
+    - stage: lint
+      name: "Code linting"
+      script: docker container run nvm-lint
+    - stage: test
+      name: "Unit tests"
+      script: docker container run nvm-test
