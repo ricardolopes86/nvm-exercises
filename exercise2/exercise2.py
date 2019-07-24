@@ -27,12 +27,15 @@ def write_to_json(data):
         json.dump(data, json_file)
     print("The content was saved to a file called: {}\n".format(file_name))
 
-@pytest.mark.parametrize("numbers_list",[(1,2,3,4,5,6)])
+@pytest.mark.parametrize("numbers_list",[(12,122,13,4,554,96)])
 def test_multiplication(numbers_list):
+    """
+    Unit test to assert result of multiplication
+    """
     multi = 1
     for number in numbers_list:
         multi = int(number) * multi
-    assert multi == 720
+    assert multi == 4048791552
 
 def multiplication(numbers_list):
     """
@@ -57,6 +60,13 @@ def multiplication(numbers_list):
     print(json.dumps(multiplication_data, indent=4, sort_keys=True))
     write_to_json(multiplication_data)
 
+@pytest.mark.parametrize("numbers_list",[(12,122,13,4,554,96)])
+def test_subtraction(numbers_list):
+    """
+    Unit test to assert result of subtracting all numbers in the list
+    """
+    assert subtract(numbers_list) == -777
+
 def subtract(num):
     """
     Will return the result of subtracting all the numbers in the array/list.
@@ -73,7 +83,7 @@ def ramdon_number(numbers_list):
 
 def merge_sort(numbers_list):
     """
-    Classic merge sort algorithm to sort and array/list.
+    Classic merge sort algorithm to sort an array/list.
     """
     if len(numbers_list) > 1:
         middle = len(numbers_list) // 2  # divide array length in half and use the "//" operator to *floor* the result
@@ -110,12 +120,26 @@ def merge_sort(numbers_list):
             right_index += 1
             current_index += 1
 
+@pytest.mark.parametrize("numbers_list",[(12,122,13,4,554,96)])
+def test_sorted_high_to_low(numbers_list):
+    """
+    Unit test to assert sorting from lower to higher 
+    """
+    assert merge_sort(numbers_list) == [4,12,13,96,122,554]
+
 def sorted_low_to_high(numbers_list):
     """
     Call a merge sort function to sort the list/array
     """
     merge_sort(numbers_list)
     print(numbers_list)
+
+@pytest.mark.parametrize("numbers_list",[(12,122,13,4,554,96)])
+def test_sorted_low_to_high(numbers_list):
+    """
+    Unit test to assert sorting from higher to lower 
+    """
+    assert sorted(numbers_list, reverse=True) == [554,122,96,13,12,4]
 
 def sorted_reverse(numbers_list):
     """
