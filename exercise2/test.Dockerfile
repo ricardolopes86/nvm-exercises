@@ -10,4 +10,4 @@ WORKDIR /app
 
 COPY ./*.* /app/
 
-ENTRYPOINT [ "pytest", "/app/exercise2.py", "-v" ]
+ENTRYPOINT [ "python", "/app/test.py" ]
