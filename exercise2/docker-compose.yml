@@ -1,0 +1,26 @@
+version: '3'
+services:
+  linting:
+    build:
+      context: .
+      dockerfile: lint.Dockerfile
+  testing:
+    build:
+      context: .
+      dockerfile: test.Dockerfile
+    volumes:
+      - ./test:/app/test
+  building:
+    build:
+      context: .
+      dockerfile: build.Dockerfile
+      args:
+        - nvm
+    volumes:
+      - ./build:/app/build
+  packaging:
+    build:
+      context: .
+      dockerfile: package.Dockerfile
+    volumes:
+      - ./package:/app/package
