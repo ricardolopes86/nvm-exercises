@@ -19,7 +19,7 @@ jobs:
       script: docker container run nvm-test
     - stage: package
       name: "Packaging application"
-      script: ./package.sh
+      script: python package.py
     - stage: cleanup
       name: "Cleaning up"
-      script: ./cleanup.sh
+      script: python cleanup.py
